@@ -1,5 +1,5 @@
 import { ClerkLoaded, ClerkLoading, SignUp } from "@clerk/nextjs";
-import { Loader2 } from "lucide-react";
+import { Loader } from "lucide-react";
 
 function Cadastro() {
   return (
@@ -15,7 +15,7 @@ function Cadastro() {
         </ClerkLoaded>
         <ClerkLoading>
           <div className="p-40 py-[13.5rem] flex items-center justify-center">
-            <Loader2 className="animate-spin" />
+            <Loader size="small" />
           </div>
         </ClerkLoading>
       </div>

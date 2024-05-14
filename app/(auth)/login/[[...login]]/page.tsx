@@ -1,5 +1,5 @@
+import Loader from "@/components/Loader";
 import { ClerkLoaded, ClerkLoading, SignIn } from "@clerk/nextjs";
-import { Loader2 } from "lucide-react";
 
 function Login() {
   return (
@@ -12,7 +12,7 @@ function Login() {
         </ClerkLoaded>
         <ClerkLoading>
           <div className="p-40 py-[13.5rem] flex items-center justify-center">
-            <Loader2 className="animate-spin" />
+            <Loader size="small"/>
           </div>
         </ClerkLoading>
       </div>
