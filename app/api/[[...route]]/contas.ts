@@ -1,20 +1,14 @@
 import { db } from "@/database/drizzle";
 import { conta } from "@/database/schemas/schema";
-import { HTTP_STATUS_CODES } from "@/lib/utils";
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
-import { eq } from "drizzle-orm";
-import { Hono } from "hono";
+import { Context, Hono } from "hono";
 
 const app = new Hono().get("/", clerkMiddleware(), async (ctx) => {
   const auth = getAuth(ctx);
 
   if (!auth?.userId) {
-    return ctx.json({ error: "Não Autorizado" as const }, 401);
-    // throw new HTTPException(401, {
-    //   res: ctx.json({ error: "Não Autorizado" }, 401),
-    // });
+    return ctx.json({ error: "Não autenticado" }, 401);
   }
-
   const data = await db
     .select({ id: conta.id, id_usuario: conta.id_usuario })
     .from(conta);
