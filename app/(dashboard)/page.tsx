@@ -3,8 +3,8 @@
 import Container from "@/components/Container";
 import Loader from "@/components/Loader";
 import { Button } from "@/components/ui/button";
-import { useGetContas } from "@/hooks/querys/useGetContas";
-import { useNovaConta } from "@/app/features/contas/hooks/useNovaConta";
+import { useGetContas } from "@/app/features/contas/hooks/queries/useGetContas";
+import { useNovaConta } from "@/app/features/contas/hooks/zustand/useNovaConta";
 
 export default function Home() {
   const { data, error, isError, isLoading } = useGetContas();

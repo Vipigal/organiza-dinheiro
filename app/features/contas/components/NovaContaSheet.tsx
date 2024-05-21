@@ -5,9 +5,9 @@ import {
   SheetContent,
   SheetDescription,
 } from "@/components/ui/sheet";
-import { useNovaConta } from "../hooks/useNovaConta";
+import { useNovaConta } from "../hooks/zustand/useNovaConta";
 import FormConta, { FormValuesConta } from "./FormConta";
-import { useCreateConta } from "../api/useCreateConta";
+import { useCreateConta } from "../hooks/queries/useCreateConta";
 
 export default function NovaContaSheet() {
   const { closeContaSheet, isOpenContaSheet } = useNovaConta();
