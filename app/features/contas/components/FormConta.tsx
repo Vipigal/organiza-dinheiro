@@ -73,7 +73,7 @@ export default function FormConta({
         <Button className="w-full" disabled={disabled}>
           {id_conta ? "Salvar alterações" : "Adicionar conta"}
         </Button>
-        {!!true && (
+        {!!id_conta && (
           <Button
             type="button"
             className="w-full text-red-500 border-red-500 hover:bg-red-500 hover:text-white"

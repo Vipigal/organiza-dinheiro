@@ -7,11 +7,13 @@ interface Props {
 
 export default function Loader({ size }: Props) {
   return (
-    <Loader2
-      className={cn(
-        "animate-spin text-slate-400",
-        size === "big" ? "size-8" : ""
-      )}
-    />
+    <div className="flex items-center justify-center">
+      <Loader2
+        className={cn(
+          "animate-spin text-slate-400",
+          size === "big" ? "size-8" : ""
+        )}
+      />
+    </div>
   );
 }

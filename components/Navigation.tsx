@@ -44,7 +44,7 @@ function Navigation() {
 
   if (isMobile) {
     return (
-      <Sheet>
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetTrigger>
           <Button //talvez erro button aqui
             variant={"outline"}
