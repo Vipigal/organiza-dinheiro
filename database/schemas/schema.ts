@@ -12,3 +12,14 @@ export const conta = pgTable("tb_conta", {
 });
 
 export const insertContaSchema = createInsertSchema(conta);
+
+export const categoria = pgTable("tb_categoria", {
+  id_categoria: text("id_categoria")
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  nom_categoria: text("nom_categoria").notNull(),
+  id_usuario: text("id_usuario").notNull(),
+  dat_registro: date("dat_registro").default("now()"),
+});
+
+export const insertCategoriaSchema = createInsertSchema(categoria);

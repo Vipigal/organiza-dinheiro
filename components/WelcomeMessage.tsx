@@ -15,7 +15,7 @@ export default function WelcomeMessage() {
         )}
       </h2>{" "}
       <p className="text-sm lg:text-base text-orange-300">
-        Este é o seu Resumo Financeiro.
+        Esse é o seu Resumo Financeiro.
       </p>
     </div>
   );

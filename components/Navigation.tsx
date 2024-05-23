@@ -7,29 +7,7 @@ import { useMedia } from "react-use";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Menu } from "lucide-react";
-
-const routes = [
-  {
-    href: "/",
-    label: "Home",
-  },
-  {
-    href: "/transacoes",
-    label: "Transações",
-  },
-  {
-    href: "/contas",
-    label: "Contas",
-  },
-  {
-    href: "/categorias",
-    label: "Categorias",
-  },
-  {
-    href: "/ajustes",
-    label: "Ajustes",
-  },
-];
+import { routes } from "@/routes/routes";
 
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
