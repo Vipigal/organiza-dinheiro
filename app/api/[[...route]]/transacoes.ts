@@ -149,6 +149,26 @@ const app = new Hono()
     }
   )
   .post(
+    "/bulk",
+    zValidator(
+      "json",
+      z.array(insertTransacaoSchema.omit({ id_transacao: true }))
+    ),
+    clerkMiddleware(),
+    async (ctx) => {
+      const auth = getAuth(ctx);
+      const values = ctx.req.valid("json");
+
+      if (!auth?.userId) {
+        return ctx.json({ error: "Não autenticado" as const }, 401);
+      }
+
+      const data = await db.insert(transacoes).values(values).returning();
+
+      return ctx.json({ data }, 200);
+    }
+  )
+  .post(
     "/delete",
     clerkMiddleware(),
     zValidator(
