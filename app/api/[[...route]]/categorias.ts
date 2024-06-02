@@ -1,5 +1,5 @@
 import { db } from "@/database/drizzle";
-import { categoria, insertCategoriaSchema } from "@/database/schemas/schema";
+import { categorias, insertCategoriaSchema } from "@/database/schemas/schema";
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
@@ -15,8 +15,8 @@ const app = new Hono()
     }
     const data = await db
       .select()
-      .from(categoria)
-      .where(eq(categoria.id_usuario, auth.userId)); //talvez funcione caso o id_usuario seja sempre um texto, assumindo que nossa tabela de usuario tenha id que venha do clerk
+      .from(categorias)
+      .where(eq(categorias.id_usuario, auth.userId)); //talvez funcione caso o id_usuario seja sempre um texto, assumindo que nossa tabela de usuario tenha id que venha do clerk
     return ctx.json({ data }, 200);
   })
   .get(
@@ -37,15 +37,15 @@ const app = new Hono()
 
       const [data] = await db
         .select({
-          id_categoria: categoria.id_categoria,
-          nom_categoria: categoria.nom_categoria,
-          dat_registro: categoria.dat_registro,
+          id_categoria: categorias.id_categoria,
+          nom_categoria: categorias.nom_categoria,
+          dat_registro: categorias.dat_registro,
         })
-        .from(categoria)
+        .from(categorias)
         .where(
           and(
-            eq(categoria.id_usuario, auth.userId),
-            eq(categoria.id_categoria, id)
+            eq(categorias.id_usuario, auth.userId),
+            eq(categorias.id_categoria, id)
           )
         );
 
@@ -74,7 +74,7 @@ const app = new Hono()
       }
 
       const [data] = await db
-        .insert(categoria)
+        .insert(categorias)
         .values({
           nom_categoria,
           id_usuario: auth.userId,
@@ -103,14 +103,14 @@ const app = new Hono()
       }
 
       const data = await db
-        .delete(categoria)
+        .delete(categorias)
         .where(
           and(
-            eq(categoria.id_usuario, auth.userId),
-            inArray(categoria.id_categoria, id_categorias)
+            eq(categorias.id_usuario, auth.userId),
+            inArray(categorias.id_categoria, id_categorias)
           )
         )
-        .returning({ id_categoria: categoria.id_categoria });
+        .returning({ id_categoria: categorias.id_categoria });
 
       return ctx.json({ data }, 200);
     }
@@ -134,12 +134,12 @@ const app = new Hono()
       }
 
       const [data] = await db
-        .update(categoria)
+        .update(categorias)
         .set({ nom_categoria })
         .where(
           and(
-            eq(categoria.id_usuario, auth.userId),
-            eq(categoria.id_categoria, id)
+            eq(categorias.id_usuario, auth.userId),
+            eq(categorias.id_categoria, id)
           )
         )
         .returning();

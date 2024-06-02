@@ -1,5 +1,5 @@
 import { db } from "@/database/drizzle";
-import { conta, insertContaSchema } from "@/database/schemas/schema";
+import { contas, insertContaSchema } from "@/database/schemas/schema";
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
@@ -15,8 +15,8 @@ const app = new Hono()
     }
     const data = await db
       .select()
-      .from(conta)
-      .where(eq(conta.id_usuario, auth.userId)); //talvez funcione caso o id_usuario seja sempre um texto, assumindo que nossa tabela de usuario tenha id que venha do clerk
+      .from(contas)
+      .where(eq(contas.id_usuario, auth.userId)); //talvez funcione caso o id_usuario seja sempre um texto, assumindo que nossa tabela de usuario tenha id que venha do clerk
     return ctx.json({ data }, 200);
   })
   .get(
@@ -37,12 +37,14 @@ const app = new Hono()
 
       const [data] = await db
         .select({
-          id_conta: conta.id_conta,
-          nom_conta: conta.nom_conta,
-          dat_registro: conta.dat_registro,
+          id_conta: contas.id_conta,
+          nom_conta: contas.nom_conta,
+          dat_registro: contas.dat_registro,
         })
-        .from(conta)
-        .where(and(eq(conta.id_usuario, auth.userId), eq(conta.id_conta, id)));
+        .from(contas)
+        .where(
+          and(eq(contas.id_usuario, auth.userId), eq(contas.id_conta, id))
+        );
 
       if (!data) {
         return ctx.json({ error: "Conta não encontrada." as const }, 404);
@@ -69,7 +71,7 @@ const app = new Hono()
       }
 
       const [data] = await db
-        .insert(conta)
+        .insert(contas)
         .values({
           nom_conta,
           id_usuario: auth.userId,
@@ -98,14 +100,14 @@ const app = new Hono()
       }
 
       const data = await db
-        .delete(conta)
+        .delete(contas)
         .where(
           and(
-            eq(conta.id_usuario, auth.userId),
-            inArray(conta.id_conta, id_contas)
+            eq(contas.id_usuario, auth.userId),
+            inArray(contas.id_conta, id_contas)
           )
         )
-        .returning({ id_conta: conta.id_conta });
+        .returning({ id_conta: contas.id_conta });
 
       return ctx.json({ data }, 200);
     }
@@ -129,9 +131,9 @@ const app = new Hono()
       }
 
       const [data] = await db
-        .update(conta)
+        .update(contas)
         .set({ nom_conta })
-        .where(and(eq(conta.id_usuario, auth.userId), eq(conta.id_conta, id)))
+        .where(and(eq(contas.id_usuario, auth.userId), eq(contas.id_conta, id)))
         .returning();
 
       if (!data) {
